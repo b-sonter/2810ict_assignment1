@@ -2,6 +2,9 @@
 
 Due at the start of week 7, Monday 27th of August, 9am
 
+s2930629 - Brianna
+s2941877 - Tim
+
 ## Problem Statement
 The goal of a ladder-gram is to transform a source word into the target word in the least number of steps. During each step, you must replace one letter in the previous word so that a new word is formed, but without changing the positions of the other letters. All words must exist in the supplied dictionary (dictionary.txt). For example, we can achieve the alchemist's dream of changing “lead” to “gold” in 3 steps (lead->load->goad->gold), or “hide” to “seek” in 6 steps (hide->side->site->sits->sies->sees->seek).
 
