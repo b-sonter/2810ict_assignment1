@@ -215,6 +215,9 @@ if find(start, words, seen, target, path):
     path.append(target)
     #print count and path
     print(len(path) - 1, path)
+    #allows user to click enter to close program - shows result if not running
+    # in shell
+    exit = input("\npress enter to exit")
 #if no path exists tell user
 else:
     print("No path found")
