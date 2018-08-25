@@ -1,14 +1,34 @@
-#first comment
+######################################################
+# Word Ladder - a ladder-gram program that
+# transforms a source word into a target word in
+# the least number of steps
+#
+# All words must exist in the supplied dictionary,
+# dictionary.text
+#
+# Code fixed by Brianna Sonter | s2930629
+####################################################
 
+#Imports for code
 import re
-def same(item, target):
-  return len([c for (c, t) in zip(item, target) if c == t])
 
-def build(pattern, words, seen, list):
-  return [word for word in words
-                 if re.search(pattern, word) and word not in seen.keys() and
-                    word not in list]
+#Open dictionary
+fname = input("Enter dictionary name: ")
+file = open(fname)
+lines = file.readlines()
 
+#Input source and target word
+while True:
+  start = input("Enter start word:")
+  words = []
+  for line in lines:
+    word = line.rstrip()
+    if len(word) == len(start):
+      words.append(word)
+  target = input("Enter target word:")
+  break
+
+#Find path
 def find(word, words, seen, target, path):
   list = []
   for i in range(len(word)):
@@ -28,19 +48,7 @@ def find(word, words, seen, target, path):
       return True
     path.pop()
 
-fname = input("Enter dictionary name: ")
-file = open(fname)
-lines = file.readlines()
-while True:
-  start = input("Enter start word:")
-  words = []
-  for line in lines:
-    word = line.rstrip()
-    if len(word) == len(start):
-      words.append(word)
-  target = input("Enter target word:")
-  break
-
+#Count steps
 count = 0
 path = [start]
 seen = {start : True}
@@ -49,3 +57,12 @@ if find(start, words, seen, target, path):
   print(len(path) - 1, path)
 else:
   print("No path found")
+
+
+#def same(item, target):
+#  return len([c for (c, t) in zip(item, target) if c == t])
+#
+#def build(pattern, words, seen, list):
+#  return [word for word in words
+#                 if re.search(pattern, word) and word not in seen.keys() and
+#                    word not in list]
