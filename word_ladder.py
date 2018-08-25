@@ -127,8 +127,6 @@ while True:
         else:
             avoid1 = input("Input must either be Y for yes or N for no. \nWould you like to include a list of words to avoid (Y/N)? ")
 
-
-
     #empty word list for word transformations
     words = []
     #find words read dictionary
@@ -149,41 +147,51 @@ path and then finds the path.
 """
 #counts how many letters in each word are in the same position
 def same(item, target):
-  return len([item for (item, target) in zip(item, target) if item == target])
+  return len([i for (i, t) in zip(item, target) if i == t])
 
-def hamming(item, target):
-    return sum(i != t for i, t in zip(item, target))
-
-#
-def build(pattern, words, seen, list):
+#searches for words in word_list to produce a match and return a corresponding
+# matchObject instance.
+def build(pattern, words, seen, word_list):
   return [word for word in words
                  if re.search(pattern, word) and word not in seen.keys() and
-                    word not in list]
+                    word not in word_list]
 
-#Find path
+#Find path for the laddergram output
 def find(word, words, seen, target, path):
+    #create empty list for word path
+    word_list = []
 
-    list = []
-
+    #build list of all possible variations
     for i in range(len(word)):
-        list += build(word[:i] + "." + word[i + 1:], words, seen, list)
-
-    if len(list) == 0:
+        word_list += build(word[:i] + "." + word[i + 1:], words, seen, word_list)
+    if len(word_list) == 0:
         return False
 
+    #steps taken if shortest path is chosen
     if shortest_path == True:
-        list = sorted([(same(w, target), w) for w in list], reverse=True)
-    else:
-        list = sorted([(same(w, target), w) for w in list])
+        word_list = sorted([(same(w, target), w) for w in word_list], reverse=True)
 
-    for (match, item) in list:
-        if match >= len(target) - 1:
+    #steps taken if shortest path is NOT chosen
+    else:
+        word_list = sorted([(same(w, target), w) for w in word_list])
+
+    #take out uncommon letters to find best path
+    uncommon = ["x", "y", "z"]
+    #remove words with uncommon letters
+    for (match, item) in word_list:
+        for letter in uncommon:
+            if letter in item:
+                word_list.remove((match, item))
+        #select best possible words for path list
+        if match >= len(target) -1:
             if match == len(target) - 1:
                 path.append(item)
             return True
+        #add words to seen dictionary to avoid duplicates
         seen[item] = True
 
-    for (match, item) in list:
+    #removes and returns last item in list
+    for (match, item) in word_list:
         path.append(item)
         if find(item, words, seen, target, path):
             return True
