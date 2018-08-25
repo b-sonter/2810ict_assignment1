@@ -9,39 +9,68 @@
 # Code fixed by Brianna Sonter | s2930629
 ####################################################
 
-#Imports for code
+#Import regular expressions library
 import re
 
-#Open dictionary
-fname = input("Enter dictionary name: ")
-file = open(fname)
-lines = file.readlines()
+#Open dictionary from input
+while True:
+    try:
+        f = open(input('Please enter dictionary name: '), 'r')
+        break
+    except FileNotFoundError:
+        print("The file you have found cannot be found, try dictionary.txt")
+
+#read dictionary
+lines = f.readlines()
 
 #Input source and target word
 while True:
-  start = input("Enter start word:")
+  start = input("Enter start word: ")
+  target = input("Enter target word: ")
+
   words = []
   for line in lines:
     word = line.rstrip()
     if len(word) == len(start):
       words.append(word)
-  target = input("Enter target word:")
   break
+
+#check words are valid for input
+
+#list of words not to be used
+
+#option to ask for the shortest path
+
+#counts how many letters in each word are in the same position
+def same(item, target):
+  return len([item for (item, target) in zip(item, target) if item == target])
+
+
+def build(pattern, words, seen, list):
+  return [word for word in words
+                 if re.search(pattern, word) and word not in seen.keys() and
+                    word not in list]
 
 #Find path
 def find(word, words, seen, target, path):
+
   list = []
+
   for i in range(len(word)):
     list += build(word[:i] + "." + word[i + 1:], words, seen, list)
+
   if len(list) == 0:
     return False
-  list = sorted([(same(w, target), w) for w in list])
+
+  list = sorted([(same(w, target), w) for w in list], reverse=True)
+
   for (match, item) in list:
     if match >= len(target) - 1:
       if match == len(target) - 1:
         path.append(item)
       return True
     seen[item] = True
+
   for (match, item) in list:
     path.append(item)
     if find(item, words, seen, target, path):
@@ -57,12 +86,3 @@ if find(start, words, seen, target, path):
   print(len(path) - 1, path)
 else:
   print("No path found")
-
-
-#def same(item, target):
-#  return len([c for (c, t) in zip(item, target) if c == t])
-#
-#def build(pattern, words, seen, list):
-#  return [word for word in words
-#                 if re.search(pattern, word) and word not in seen.keys() and
-#                    word not in list]
