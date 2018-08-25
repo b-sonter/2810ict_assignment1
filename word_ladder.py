@@ -45,15 +45,49 @@ Lets user know when their input is invalid.
 # Shortest Path Option
 def shortest(spath):
     while True:
+        #user wants shortest path
         if spath.lower() == 'y':
             return True
             break
-
+        #user does not want shortest path
         elif spath.lower() == 'n':
             return False
             break
+        #user puts in wrong input
         else:
             spath = input("Input must either be Y for yes or N for no. \nWould you like to use the shortest path (Y/N)? ")
+
+#check if start word is valid
+def start_check(s):
+    while True:
+        #user does not put in a word longer than 2 letters
+        if len(s) < 2:
+            s = input("You must input words with 2 or more letters. \nEnter start word: ")
+
+        #user puts in valid input
+        elif s.isalpha():
+            return s
+            break
+
+        #user puts in charaters other than letters
+        else:
+            s = input("You must input words with letters only. \nEnter start word: ")
+
+#check if target word is valid
+def target_check(t):
+    while True:
+        #user puts in correct input
+        if not t.isalpha():
+            t = input("You must input words with letters only. \nEnter start word: ")
+
+        #user does not put in a word the same length as the start word
+        elif len(t) != len(start):
+            t = input("You must input word the same length as your start word. \nEnter start word: ")
+
+        #user puts in valid input
+        else:
+            return t
+            break
 
 
 """ Take user inputs and creates a word list of all possible
@@ -67,19 +101,33 @@ while True:
     shortest_path = shortest(spath)
 
     #user input of the starting word
-    start = input("Enter start word: ")
+    s = input("Enter start word: ")
+    start = start_check(s)
 
     #user input of the target word
-    target = input("Enter target word: ")
+    t = input("Enter target word: ")
+    target = target_check(t)
 
     #input for list of words to be avoided
     avoid1 = input("Would you like to include a list of words to avoid (Y/N)? ")
-    if avoid1 == 'Y':
-        #creates list of words to be avoided
-        avoid_list = input("Enter list of words you would like to avoid: ")
-    else:
-        #if no words wish to be added, list is left empty
-        avoid_list = []
+
+    while True:
+        if avoid1.lower() == 'y':
+            #creates list of words to be avoided
+            avoid2 = input("Enter list of words you would like to avoid: ")
+            avoid_list = avoid2
+            break
+
+        elif avoid1.lower() == 'n':
+            #if no words wish to be added, list is left empty
+            avoid_list = []
+            break
+
+            #user puts in wrong input
+        else:
+            avoid1 = input("Input must either be Y for yes or N for no. \nWould you like to include a list of words to avoid (Y/N)? ")
+
+
 
     #empty word list for word transformations
     words = []
@@ -124,7 +172,7 @@ def find(word, words, seen, target, path):
         return False
 
     if shortest_path == True:
-        list = sorted([(hamming(w, target), w) for w in list])
+        list = sorted([(same(w, target), w) for w in list], reverse=True)
     else:
         list = sorted([(same(w, target), w) for w in list])
 
