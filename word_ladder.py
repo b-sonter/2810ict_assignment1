@@ -6,7 +6,7 @@
 # All words must exist in the supplied dictionary,
 # dictionary.text
 #
-# Code fixed by Brianna Sonter | s2930629
+# Assignment compeleted by Brianna Sonter | s2930629
 ####################################################
 
 #Import regular expressions library
