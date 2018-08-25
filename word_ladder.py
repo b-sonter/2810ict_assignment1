@@ -12,18 +12,28 @@
 #Import regular expressions library
 import re
 
-#Open dictionary from input
+""" Open the dictionary with exception handling -
+Takes file to be opened, if file is invalid FileNotFoundError
+will repeat until a valid filename is entered.
+"""
 while True:
     try:
+        #take user input for dictionary to be read
         f = open(input('Please enter dictionary name: '), 'r')
+        #move onto rest of program
         break
     except FileNotFoundError:
-        print("The file you have found cannot be found, try dictionary.txt")
+        #if file name not correct, repeat message until correct
+        print("The file you have asked for cannot be found, try dictionary.txt")
 
-#read dictionary
+#read dictionary from correct filename
 lines = f.readlines()
 
-#Input source and target word
+
+""" Take user input for the start and target words-
+Takes inputs while checking that they are invalid
+inputs
+"""
 while True:
   start = input("Enter start word: ")
   target = input("Enter target word: ")
@@ -35,7 +45,7 @@ while True:
       words.append(word)
   break
 
-#check words are valid for input
+
 
 #list of words not to be used
 
@@ -77,7 +87,7 @@ def find(word, words, seen, target, path):
       return True
     path.pop()
 
-#Count steps
+#Count steps for path
 count = 0
 path = [start]
 seen = {start : True}
