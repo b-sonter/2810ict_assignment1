@@ -18,7 +18,6 @@ class test_word_ladder(unittest.TestCase):
         #check for a no input
         self.assertFalse(word_ladder.shortest("n"))
 
-
     def test_start_check(self):
         #valid input
         self.assertEqual(word_ladder.start_check("lead"), "lead")
@@ -28,7 +27,6 @@ class test_word_ladder(unittest.TestCase):
         #valid input
         self.assertEqual(word_ladder.start_check("gold"), "gold")
         self.assertEqual(word_ladder.start_check("seek"), "seek")
-
 
     def test_same(self):
         #test to see if program counts the right amount of same letters
@@ -40,7 +38,6 @@ class test_word_ladder(unittest.TestCase):
     def test_build(self):
         #invalid inputs for build will retrun false
         self.assertFalse(word_ladder.build("asdsf", "asdfsdf", "msdfsdfh", []))
-
 
     def test_find(self):
         #invalid inputs will return false
