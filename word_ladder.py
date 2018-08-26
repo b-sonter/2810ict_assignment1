@@ -16,20 +16,25 @@ import re
 Takes file to be opened, if file is invalid FileNotFoundError
 will repeat until a valid filename is entered.
 """
-f = input('Please enter dictionary name: ')
+#f = input('Please enter dictionary name: ')
 
-def check_dict(f):
+def check_dict():
     while True:
         try:
+            f = input('Please enter dictionary name: ')
             #open and reads dictionary
-            return open(f, 'r')
+            return open_dict(f)
 
         except FileNotFoundError:
             #if file name not correct, repeat message until correct
-            f = input("The file you have asked for cannot be found, try dictionary.txt: ")
+            print("File could not be found, try dictionary.txt: ")
+
+def open_dict(d):
+    return open(d, 'r')
+
 
 #read dictionary from correct filename
-d = check_dict(f)
+d = check_dict()
 lines = d.readlines()
 
 
@@ -51,6 +56,10 @@ def shortest(spath):
             break
         #user puts in wrong input
         else:
+            #the comment below's purpose is for unittesting - uncomment for test
+            #raise ValueError(" Invalid input, input must be Y for yes or N for no")
+
+            #loops for the user until the shortest path has been chosen or not
             spath = input("Input must either be Y for yes or N for no. \nWould you like to use the shortest path (Y/N)? ")
 
 #check if start word is valid
@@ -58,6 +67,10 @@ def start_check(s):
     while True:
         #user does not put in a word longer than 2 letters
         if len(s) < 2:
+            #the comment below's purpose is for unittesting - uncomment for test
+            #raise ValueError("You must input words with 2 or more letters.")
+
+            #loops for the user until a correct word has been input
             s = input("You must input words with 2 or more letters. \nEnter start word: ")
 
         #user puts in valid input
@@ -67,6 +80,10 @@ def start_check(s):
 
         #user puts in charaters other than letters
         else:
+            #the comment below's purpose is for unittesting - uncomment for test
+            #raise ValueError("You must input words with letters only.")
+
+            #loops for the user until a correct word has been input
             s = input("You must input words with letters only. \nEnter start word: ")
 
 #check if target word is valid
@@ -74,10 +91,18 @@ def target_check(t):
     while True:
         #user puts in correct input
         if not t.isalpha():
+            #the comment below's purpose is for unittesting - uncomment for test
+            #raise ValueError("You must input words with letters only.")
+
+            #loops for the user until a correct word has been input
             t = input("You must input words with letters only. \nEnter start word: ")
 
         #user does not put in a word the same length as the start word
         elif len(t) != len(start):
+            #the comment below's purpose is for unittesting - uncomment for test
+            #raise ValueError("You must input word the same length as your start word.")
+
+            #loops for the user until a correct word has been input
             t = input("You must input word the same length as your start word. \nEnter start word: ")
 
         #user puts in valid input
