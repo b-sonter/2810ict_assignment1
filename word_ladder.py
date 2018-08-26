@@ -16,25 +16,21 @@ import re
 Takes file to be opened, if file is invalid FileNotFoundError
 will repeat until a valid filename is entered.
 """
-def check_dict():
+f = input('Please enter dictionary name: ')
+
+def check_dict(f):
     while True:
         try:
-            #take user input for dictionary to be read
-            f = input('Please enter dictionary name: ')
-            return read_dict(f)
-            #move onto rest of program
-            break
+            #open and reads dictionary
+            return open(f, 'r')
+
         except FileNotFoundError:
             #if file name not correct, repeat message until correct
-            print("The file you have asked for cannot be found, try dictionary.txt")
-
-#open file from correct filename
-def read_dict(file):
-    return open(file, 'r')
+            f = input("The file you have asked for cannot be found, try dictionary.txt: ")
 
 #read dictionary from correct filename
-dict = check_dict()
-lines = dict.readlines()
+d = check_dict(f)
+lines = d.readlines()
 
 
 """ Functions to check user inputs -
@@ -123,7 +119,7 @@ while True:
             avoid_list = []
             break
 
-            #user puts in wrong input
+        #user puts in wrong input
         else:
             avoid1 = input("Input must either be Y for yes or N for no. \nWould you like to include a list of words to avoid (Y/N)? ")
 
@@ -136,6 +132,7 @@ while True:
         if len(word) == len(start) and word not in avoid_list:
             #add words to the word list
             words.append(word)
+
 
     break
 
@@ -209,6 +206,7 @@ count = 0
 path = [start]
 seen = {start : True}
 
+
 #use path finding function
 if find(start, words, seen, target, path):
     #add target word on the end of the path list
@@ -220,4 +218,4 @@ if find(start, words, seen, target, path):
     exit = input("\npress enter to exit")
 #if no path exists tell user
 else:
-    print("No path found")
+    print("No path found, words not in dictionary")
